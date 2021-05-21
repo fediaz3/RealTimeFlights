@@ -1,19 +1,20 @@
 import './App.css';
+import {ClientWS} from './components/ClientWebSocket/ClientWebSocket'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <p>
-          Header 
+          Real-Time Flights
         </p>
       </header>
 
       <div className="body">
-        <p>
+        {/* <p>
           Body
-        </p>
-
+        </p> */}
+        <ClientWS/>
       </div>
     </div>
   );
