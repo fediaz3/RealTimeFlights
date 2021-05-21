@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-.body {
-  background-color: #323844;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 4vh;
@@ -24,5 +13,35 @@
   color: white;
 }
 
+/*
+#box-field {
+  display: inline-block;
+  width: 50%;
+  border: white;
+}
+*/
+
+.leaflet-container{ 
+  height: 100%; 
+  width: 100%
+}
+
+#FlightMap{
+    height: 400px;
+    width: 100%;
+    display: flex;
+}
+
+
+.body {
+  background-color: #323844;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
 
 
