@@ -33,6 +33,13 @@
 }
 
 
+
+
+.Chat-Container{
+  height: 300px;
+  overflow: scroll;
+}
+
 .body {
   background-color: #323844;
   min-height: 100vh;
@@ -41,7 +48,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 
