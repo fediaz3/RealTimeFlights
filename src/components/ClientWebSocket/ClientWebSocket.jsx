@@ -7,7 +7,6 @@ import { Chat } from '../Chat/Chat';
 const io = require("socket.io-client");
 
 const ClientWS = (props) => {   
-    // const [count, setCount] = useState(0);
     useEffect(() => {
         const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
             path: '/flights',
@@ -15,8 +14,11 @@ const ClientWS = (props) => {
         });
         
         // socket.on("POSITION", msg => { //poner cuando quiera dibujar el mapa
-        //     console.log("Position:", msg)
+        //     // console.log("Position:", msg)
+        //     setPosition({code: msg.code, position: msg.position})
+        //     
         // })
+
         socket.on("FLIGHTS", msg => {
             console.log("Flights:", msg)
         })
@@ -32,7 +34,7 @@ const ClientWS = (props) => {
         <>
           <p>Client WS Contiene a todos</p>
           <div id='box-field'>
-              <FlightsMap/>
+              <FlightsMap />
               <FlightsInfo/>
           </div>
           
