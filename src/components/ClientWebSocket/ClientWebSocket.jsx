@@ -7,6 +7,9 @@ import { Chat } from '../Chat/Chat';
 const io = require("socket.io-client");
 
 const ClientWS = (props) => {   
+
+    const [flightsInfo, setFligthsInfo] = useState([])
+
     useEffect(() => {
         const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
             path: '/flights',
@@ -22,6 +25,8 @@ const ClientWS = (props) => {
         socket.emit('FLIGHTS')
         socket.on("FLIGHTS", msg => {
             console.log("Flights:", msg)
+            let newFligthsInfo = msg
+            setFligthsInfo(newFligthsInfo)
         })
 
         socket.on("CHAT", msg => {
@@ -35,7 +40,7 @@ const ClientWS = (props) => {
         <>
           <p>Client WS Contiene a todos</p>
           <div id='box-field'>
-              <FlightsMap />
+              <FlightsMap flightsInfo={flightsInfo} />
               <FlightsInfo/>
           </div>
           
