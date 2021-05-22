@@ -41,7 +41,7 @@ const ClientWS = (props) => {
           <p>Client WS Contiene a todos</p>
           <div id='box-field'>
               <FlightsMap flightsInfo={flightsInfo} />
-              <FlightsInfo/>
+              <FlightsInfo flightsInfo={flightsInfo} />
           </div>
           
           <div id='box-field'>
