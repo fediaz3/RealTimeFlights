@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline, Tooltip} from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline, Tooltip, LayerGroup, Circle} from 'react-leaflet'
 import L from 'leaflet'
 import marker from "./plane.png";
+import markerDestination from './destination2.png'
+import { FlightsInfo } from '../FlightsInformation/FlightsInfo';
 
 const io = require("socket.io-client");
 const newicon = new L.icon({
@@ -9,19 +11,28 @@ const newicon = new L.icon({
   iconSize: [22, 22]
 });
 
-const FlightsMap = (props) => {   
+const destinatioIcon = new L.icon({
+  iconUrl: markerDestination,
+  iconSize: [22, 22]
+});
+
+const FlightsMap = (props) => { 
+
+    const {flightsInfo} = props;
+
+    const [originAndDestinations, setOriginAndDestinations] = useState([])
+
     const [positions, setPositions] = useState({})
 
     // const [position, setPosition] = useState({ code: '', position: [0, 0] })
     useEffect(() => {
-      const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
+        const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
             path: '/flights',
             reconnection: true //Por default cuando se desconecta, "se reconecta" solo 
         });
         socket.on("POSITION", msg => { //poner cuando quiera dibujar el mapa
             // console.log("Position:", msg)
             // setPosition({code: msg.code, position: msg.position})  
-
             if (positions.hasOwnProperty(msg.code) != true) {
               positions[msg.code] = []
             }
@@ -33,16 +44,41 @@ const FlightsMap = (props) => {
             setPositions(newObject);
             // console.log('positions a modificar:', newObject)
           })
-
     }, []);
 
-    // useEffect(() => {
-    //   // console.log("positions modificado:", positions)
-    //   // Object.entries(positions).map( x => {
-    //   //   // console.log(x[0], x[1][0], x[1][1])}
-    //   // )
-    //   // console.log('--------------------------------------')
-    // }, [positions])
+
+    useEffect(()=> {
+      const limeOptions2 = { color: 'purple', weight: 5 }
+      const fillBlueOptions = { fillColor: 'blue' }
+      // console.log("flightsInfo:", flightsInfo)
+      let newOriginAndDestinations = flightsInfo.map(x => {
+        const { ignore1, code, destination, origin, ...ignore2} = x
+        return (
+          <>
+          <Polyline positions={[origin, destination]} pathOptions={limeOptions2} >
+            <Tooltip>{`${code}`}</Tooltip>
+          </Polyline>
+
+          <LayerGroup>
+            <Marker position={origin}>
+              <Tooltip>{`Origin ${code}`}</Tooltip>
+            </Marker>
+            <Circle center={destination} pathOptions={fillBlueOptions} radius={3000}>
+              <Tooltip>{`Destination ${code}`}</Tooltip>
+            </Circle>/
+          
+          </LayerGroup>
+ 
+          {/* <Marker position={destination} icon={destinatioIcon}> */}
+         
+          </>
+        )
+      })
+
+      setOriginAndDestinations(newOriginAndDestinations)
+    }, [flightsInfo]) //efecto secundario al cambio de la "prop" flightsInfo
+
+
 
     const limeOptions1 = { color: 'red', weight: 8 }
 
@@ -68,6 +104,8 @@ const FlightsMap = (props) => {
     )
     
     
+    
+    
     return (
       <div id="FlightMap" >
         {/*<p>{position.code} {position.position}</p> */}
@@ -76,6 +114,11 @@ const FlightsMap = (props) => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
             { positionsView }
+
+            { originAndDestinations !== [] ?
+              originAndDestinations : <></>
+            }
+            
 
           </MapContainer>
       </div>
