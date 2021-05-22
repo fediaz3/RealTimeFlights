@@ -19,6 +19,7 @@ const ClientWS = (props) => {
         //     
         // })
 
+        socket.emit('FLIGHTS')
         socket.on("FLIGHTS", msg => {
             console.log("Flights:", msg)
         })
