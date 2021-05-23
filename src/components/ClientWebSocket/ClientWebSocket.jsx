@@ -31,13 +31,13 @@ const ClientWS = (props) => {
 
         socket.emit('FLIGHTS')
         socket.on("FLIGHTS", msg => {
-            console.log("Flights:", msg)
+            // console.log("Flights:", msg)
             let newFligthsInfo = msg
             setFligthsInfo(newFligthsInfo)
         })
 
         socket.on("CHAT", msg => {
-            console.log("Chat:", msg)
+            // console.log("Chat:", msg)
             setNewMessageSocket(msg)
         })
     
@@ -46,7 +46,7 @@ const ClientWS = (props) => {
 
 
     const getData1 = (e) => {
-        console.log("get Data (username logged in):", e)
+        // console.log("get Data (username logged in):", e)
         let userNameLogged = e
         setUsername(userNameLogged)
         setShowChat(true)

@@ -9,7 +9,7 @@ const InsertName = (props) => {
 
     const mySubmitHandler = (event) => {
         event.preventDefault();
-        console.log("click final", userName)
+        // console.log("click final", userName)
         props.sendData1(userName)
       }
 
