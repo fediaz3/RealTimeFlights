@@ -2,13 +2,20 @@ import React, {useState, useEffect} from 'react'
 import { FlightsMap } from '../FlightsMap/FlightsMap'
 import {FlightsInfo} from '../FlightsInformation/FlightsInfo'
 import { Chat } from '../Chat/Chat';
+import { InsertName } from '../Chat/InsertName';
 
 
 const io = require("socket.io-client");
 
 const ClientWS = (props) => {   
 
+    const [username, setUsername] = useState('')
+
+    const [showChat, setShowChat] = useState(false)
+
     const [flightsInfo, setFligthsInfo] = useState([])
+
+    const [newMessageSocket, setNewMessageSocket] = useState({})
 
     useEffect(() => {
         const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
@@ -31,10 +38,21 @@ const ClientWS = (props) => {
 
         socket.on("CHAT", msg => {
             console.log("Chat:", msg)
+            setNewMessageSocket(msg)
         })
     
         
     }, []);
+
+
+    const getData1 = (e) => {
+        console.log("get Data (username logged in):", e)
+        let userNameLogged = e
+        setUsername(userNameLogged)
+        setShowChat(true)
+
+    }
+
 
     return (
         <>
@@ -44,8 +62,13 @@ const ClientWS = (props) => {
               <FlightsInfo flightsInfo={flightsInfo} />
           </div>
           
+          <p></p>
           <div id='box-field'>
-            <Chat/>
+            { 
+                showChat 
+                ?  <Chat newMessageSocket = {newMessageSocket} username={username}/>
+                : <InsertName sendData1={getData1}/>
+            }
           </div>
         </>
     );

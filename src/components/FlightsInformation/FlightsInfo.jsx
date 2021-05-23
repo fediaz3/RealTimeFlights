@@ -53,7 +53,8 @@ const FlightsInfo = (props) => {
 
     return (
       <div id="FlightsInfo" >
-        <p>Informacion de Vuelos</p>
+        <p></p>
+        <p>Flight Information</p>
         <Tab menu={{ pointing: true, vertical:true  }} panes={panes} />
       </div>
     );
