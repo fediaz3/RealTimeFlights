@@ -9,6 +9,10 @@ const io = require("socket.io-client");
 
 const ClientWS = (props) => {   
 
+    const [username, setUsername] = useState('')
+
+    const [showChat, setShowChat] = useState(false)
+
     const [flightsInfo, setFligthsInfo] = useState([])
 
     const [newMessageSocket, setNewMessageSocket] = useState({})
@@ -40,6 +44,16 @@ const ClientWS = (props) => {
         
     }, []);
 
+
+    const getData1 = (e) => {
+        console.log("get Data (username logged in):", e)
+        let userNameLogged = e
+        setUsername(userNameLogged)
+        setShowChat(true)
+
+    }
+
+
     return (
         <>
           <p>Client WS Contiene a todos</p>
@@ -48,11 +62,13 @@ const ClientWS = (props) => {
               <FlightsInfo flightsInfo={flightsInfo} />
           </div>
           
-
-          <InsertName/>
-
+          <p></p>
           <div id='box-field'>
-            <Chat newMessageSocket = {newMessageSocket}/>
+            { 
+                showChat 
+                ?  <Chat newMessageSocket = {newMessageSocket} username={username}/>
+                : <InsertName sendData1={getData1}/>
+            }
           </div>
         </>
     );
