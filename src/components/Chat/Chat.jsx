@@ -6,7 +6,7 @@ const processDate = (date) => {
   newDate = new Date(date)
   // console.log("newdate:", newDate)
   let [day, month, year, hour, minute, second] = [newDate.getDate(),
-     newDate.getMonth(), newDate.getFullYear(), newDate.getHours(), 
+     newDate.getMonth() + 1, newDate.getFullYear(), newDate.getHours(), 
      newDate.getMinutes(), newDate.getSeconds()]
   newDate = `${day}/${month}/${year} 
             ${hour}:${minute}:${second}`

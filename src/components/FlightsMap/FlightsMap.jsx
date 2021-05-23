@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline, Tooltip, LayerGroup, Circle} from 'react-leaflet'
 import L from 'leaflet'
 import marker from "./plane.png";
-import markerDestination from './destination2.png'
 import { FlightsInfo } from '../FlightsInformation/FlightsInfo';
 
 const io = require("socket.io-client");
@@ -11,14 +10,13 @@ const newicon = new L.icon({
   iconSize: [22, 22]
 });
 
-const destinatioIcon = new L.icon({
-  iconUrl: markerDestination,
-  iconSize: [22, 22]
-});
-
 const FlightsMap = (props) => { 
 
     const {flightsInfo} = props;
+
+    const [originSeen, setOriginSeen] = useState(new Map([]))
+
+    const [destinationSeen, setDestinationSeen] = useState(new Map([]))
 
     const [originAndDestinations, setOriginAndDestinations] = useState([])
 
@@ -53,6 +51,45 @@ const FlightsMap = (props) => {
       // console.log("flightsInfo:", flightsInfo)
       let newOriginAndDestinations = flightsInfo.map(x => {
         const { ignore1, code, destination, origin, ...ignore2} = x
+
+        // DESTINATIONS
+        let key = destination.toString()
+        // console.log("key destination:", typeof(key), key)
+        if (destinationSeen.has(key) === false) {
+          let copy = destinationSeen
+          copy.set(key, new Set())
+          setDestinationSeen(copy)
+        } 
+        let copy = destinationSeen
+        copy.set(key, copy.get(key).add(code))
+        setDestinationSeen(copy)
+
+        // console.log("Destinationseen:", destinationSeen)
+        // console.log("destination values:", Array.from(destinationSeen.values()))
+        // console.log("destination values current:", Array.from(destinationSeen.get(key)))
+        let codesToCurrentDestination = Array.from(destinationSeen.get(key))
+
+        // ORIGINS
+        let key2 = origin.toString()
+        // console.log("key destination:", typeof(key), key)
+        if (originSeen.has(key2) === false) {
+          let copy2 = originSeen
+          copy2.set(key2, new Set())
+          setOriginSeen(copy2)
+        } 
+        let copy2 = originSeen
+        copy2.set(key2, copy2.get(key2).add(code))
+        setOriginSeen(copy2)
+
+        // console.log("originSeen:", originSeen)
+        // console.log("destination values:", Array.from(destinationSeen.values()))
+        // console.log("destination values current:", Array.from(destinationSeen.get(key)))
+        let codesToCurrentOrigin = Array.from(originSeen.get(key2))
+        //console.log("origin values code:", codesToCurrentOrigin)
+
+
+        
+
         return (
           <>
           <Polyline positions={[origin, destination]} pathOptions={limeOptions2} >
@@ -60,12 +97,12 @@ const FlightsMap = (props) => {
           </Polyline>
 
           <LayerGroup>
-            <Marker position={origin}>
-              <Tooltip>{`Origin ${code}`}</Tooltip>
+            <Marker position={destination}>
+              <Tooltip>{`Destination ${codesToCurrentDestination}`}</Tooltip>
             </Marker>
-            <Circle center={destination} pathOptions={fillBlueOptions} radius={3000}>
-              <Tooltip>{`Destination ${code}`}</Tooltip>
-            </Circle>/
+            <Circle center={origin} pathOptions={fillBlueOptions} radius={3000}>
+              <Tooltip>{`Origin ${codesToCurrentOrigin}`}</Tooltip>
+            </Circle>/ 
           
           </LayerGroup>
  
