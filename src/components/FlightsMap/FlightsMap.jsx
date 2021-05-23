@@ -146,7 +146,7 @@ const FlightsMap = (props) => {
     return (
       <div id="FlightMap" >
         {/*<p>{position.code} {position.position}</p> */}
-        <MapContainer center={[51.505, -0.09]} zoom={1} scrollWheelZoom={true}>
+        <MapContainer center={[-14.655488829521314, -46.342825222619325]} zoom={2} scrollWheelZoom={true}>
             <TileLayer attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 

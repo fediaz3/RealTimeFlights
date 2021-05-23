@@ -14,9 +14,22 @@
 }
 
 
-#box-field {
+
+#box-field1 {
   display: inline-block;
-  width: 50%;
+  width: 60%;
+  border: white;
+}
+
+#box-field2 {
+  display: inline-block;
+  width: 60%;
+  border: white;
+}
+
+#box-field3 {
+  display: inline-block;
+  width: 60%;
   border: white;
 }
 
@@ -27,7 +40,7 @@
 }
 
 #FlightMap{
-    height: 400px;
+    height: 480px;
     width: 100%;
     display: flex;
 }

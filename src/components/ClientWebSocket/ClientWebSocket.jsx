@@ -57,13 +57,15 @@ const ClientWS = (props) => {
     return (
         <>
           <p></p>
-          <div id='box-field'>
+          <div id='box-field1'>
               <FlightsMap flightsInfo={flightsInfo} />
-              <FlightsInfo flightsInfo={flightsInfo} />
+          </div>
+          <div id='box-field2'>
+            <FlightsInfo flightsInfo={flightsInfo} />
           </div>
           
           <p></p>
-          <div id='box-field'>
+          <div id='box-field3'>
             { 
                 showChat 
                 ?  <Chat newMessageSocket = {newMessageSocket} username={username}/>
