@@ -16,8 +16,8 @@ const FlightsInfo = (props) => {
           {
             menuItem: `${code}`,
             render: () => 
-            <Tab.Pane>
-              <Card style={{margin: "center", textAlign: "center"}}>
+            <Tab.Pane style={{backgroundColor: "#292d50", borderColor: '#0000', align: 'center'}}>
+              <Card style={{margin: "center", textAlign: "center", borderColor: "#7e89a0", borderColor: '#0000'}}>
               <Card.Content>
                 <Card.Header>{`Flight ${code}`}</Card.Header>
                 <Card.Description>
@@ -54,8 +54,10 @@ const FlightsInfo = (props) => {
     return (
       <div id="FlightsInfo" >
         <p></p>
-        <p>Flight Information</p>
-        <Tab menu={{ pointing: true, vertical:true  }} panes={panes} />
+        <p style={{color: 'white'}}>Flight Information</p>
+        <Tab menu={{ fluid:true, vertical:true, tabular:true  }} panes={panes} 
+          style={{color: 'white'}}
+        />
       </div>
     );
 
