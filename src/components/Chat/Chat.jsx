@@ -1,6 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import { MessageList, Input, Button } from 'react-chat-elements'
 
+const processDate = (date) => {
+  let newDate = undefined
+  newDate = new Date(date)
+  // console.log("newdate:", newDate)
+  let [day, month, year, hour, minute, second] = [newDate.getDate(),
+     newDate.getMonth(), newDate.getFullYear(), newDate.getHours(), 
+     newDate.getMinutes(), newDate.getSeconds()]
+  newDate = `${day}/${month}/${year} 
+            ${hour}:${minute}:${second}`
+  return newDate
+
+}
+
 const io = require("socket.io-client");
 const socket = io("wss://tarea-3-websocket.2021-1.tallerdeintegracion.cl", {
     path: '/flights',
@@ -14,12 +27,16 @@ const Chat = (props) => {
   useEffect(() => {
     // console.log('llego:', newMessageSocket)
     if (Object.keys(newMessageSocket).length > 0){
-      let {name, message} = newMessageSocket
+      let {date, name, message} = newMessageSocket
+      let dateFormat = processDate(date)
+
       let newMessageChat =  {
         position: name == username ? 'right' : 'left',
         type: 'text',
+        title: `${name}      ${dateFormat}`,
         text: message,
-        date: new Date(),
+        height: "auto",
+        date: '',
       }
       setMessages(prev => [...prev, newMessageChat])
       // console.log('llego un mensaje:', messages)
@@ -49,17 +66,15 @@ const Chat = (props) => {
         <p></p>
         <p>Control Center - User: {username}</p>
         <div className="Chat-Container">
-
           { messages !== [] 
           ?  
           <>
             <MessageList
             className='message-list'
             lockable={true}
-            // toBottomHeight={'100%'}
+            toBottomHeight={'100%'}
             dataSource={messages}
             />
-
             <Input
               placeholder="Type here..."
               // multiline={true}
@@ -74,9 +89,7 @@ const Chat = (props) => {
           : 
           <>
           </>
-          
           }
-
         </div>
         
       </>
