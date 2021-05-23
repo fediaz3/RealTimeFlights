@@ -16,7 +16,7 @@
 
 #box-field {
   display: inline-block;
-  width: 70%;
+  width: 50%;
   border: white;
 }
 
@@ -32,16 +32,24 @@
     display: flex;
 }
 
-
-
-
 .Chat-Container{
-  height: 300px;
+  height: auto;
   overflow: scroll;
 }
 
+.message-list{
+  background-color:#292d50;
+  min-height: 40vh;
+  max-height: 40vh;
+}
+
+#FlightsInfo{
+  background-color:#292d50;
+  color: whitesmoke
+}
+
 .body {
-  background-color: #323844;
+  background-color: #292d40;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -64,7 +64,7 @@ const Chat = (props) => {
     return (
       <>
         <p></p>
-        <p>Control Center - User: {username}</p>
+        <p style={{color: 'white'}}>Control Center - User: {username}</p>
         <div className="Chat-Container">
           { messages !== [] 
           ?  
@@ -80,6 +80,7 @@ const Chat = (props) => {
               // multiline={true}
               type='text'
               defaultValue=''
+              autoFocus={true}
               onChange={handleChange}
               rightButtons={ 
                 <Button color='white' backgroundColor='#282c34' text='Send'

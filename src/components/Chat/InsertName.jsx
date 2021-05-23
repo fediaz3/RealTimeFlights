@@ -19,7 +19,7 @@ const InsertName = (props) => {
 
     return (
         <form onSubmit={mySubmitHandler} style={{paddingBottom: '50px'}}>
-            <p>Log In to Control Center</p>
+            <p style={{color: 'white'}}>Log In to Control Center</p>
             <input
               type='text'
               placeholder='Type your name...'
